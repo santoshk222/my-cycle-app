@@ -6,7 +6,7 @@ on:
       - '**'
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -25,14 +25,18 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
+      - name: List docker image versions
+        run: docker image ls
+
+      - name: Extract version from pom.xml
+        id: extract_version
+        run: echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-#      - name: Build Docker image
-#        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/my-spring-boot-app:latest .
-
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-cycle-app:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-cycle-app:${{ env.VERSION }}
