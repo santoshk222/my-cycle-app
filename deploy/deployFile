@@ -5,10 +5,10 @@ pipeline {
         stage('Remove running container') {
             steps {
                 script {
-                    def containerExists = bat(script: 'docker ps -a -q -f name=mycycleapp', returnStdout: true).trim()
+                    def containerExists = powershell(script: 'docker ps -a -q -f name=mycycleapp', returnStdout: true).trim()
                     if (containerExists) {
-                        bat 'docker stop mycycleapp'
-                        bat 'docker rm mycycleapp'
+                        powershell 'docker stop mycycleapp'
+                        powershell 'docker rm mycycleapp'
                     } else {
                         echo 'No existing container named mycycleapp'
                     }
@@ -18,9 +18,9 @@ pipeline {
     }
     post {
         always {
-            bat 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
-            bat 'docker image ls'
-            bat 'docker container ls'
+            powershell 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
+            powershell 'docker image ls'
+            powershell 'docker container ls'
         }
     }
 }
