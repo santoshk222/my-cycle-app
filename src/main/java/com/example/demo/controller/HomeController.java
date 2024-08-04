@@ -20,7 +20,7 @@ public class HomeController {
 
     @GetMapping(value = "home")
     public String home(){
-        return "Hello from cycle app";
+        return "Hello from cycle app docker";
     }
 
 
