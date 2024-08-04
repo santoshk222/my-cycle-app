@@ -8,7 +8,6 @@ pipeline {
                     bat 'docker rm mycycleapp'
                 }
             }
-        }
 
         stage('Deploy'){
             steps{
@@ -16,7 +15,6 @@ pipeline {
             }
         }
     }
-
     post {
         always {
             bat 'docker image ls'
