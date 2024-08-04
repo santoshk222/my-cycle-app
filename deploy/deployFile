@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/santoshk222/my-cycle-app.git'
+            }
+        }
+
+        stage('Deploy'){
+            steps{
+                bat docker run -d -p 8090:8090 myapps/mycycleapp:latest
+            }
+        }
+    }
+
+    post {
+        always {
+            junit '**/target/surefire-reports/*.xml'
+            archiveArtifacts artifacts: '**/target/*.jar', allowEmptyArchive: true
+        }
+    }
+}
