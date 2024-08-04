@@ -10,13 +10,8 @@ pipeline {
             }
     }
     post {
-        always{
-              steps{
-                  bat 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
-              }
-           }
-
-        always {
+         always {
+            bat 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
             bat 'docker image ls'
             bat 'docker container ls'
         }
