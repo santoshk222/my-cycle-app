@@ -2,15 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Remove running container'){
-                steps{
-                    bat 'docker stop mycycleapp || true'
-                    bat 'docker rm mycycleapp || true'
+        stage('Remove running container') {
+            steps {
+                script {
+                    def containerExists = bat(script: 'docker ps -a -q -f name=mycycleapp', returnStdout: true).trim()
+                    if (containerExists) {
+                        bat 'docker stop mycycleapp'
+                        bat 'docker rm mycycleapp'
+                    } else {
+                        echo 'No existing container named mycycleapp'
+                    }
                 }
             }
+        }
     }
     post {
-         always {
+        always {
             bat 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
             bat 'docker image ls'
             bat 'docker container ls'
