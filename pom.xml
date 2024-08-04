@@ -56,8 +56,8 @@
                 <version>1.4.13</version>
                 <configuration>
                     <repository>santok222/my-cycle-app</repository>
-                    <tag>${project.version}</tag>
-                    <tag>latest</tag>
+<!--                    <tag>${project.version}</tag>-->
+<!--                    <tag>latest</tag>-->
                     <buildArgs>
                         <JAR_FILE>target/MyCycleApp-${project.version}.jar</JAR_FILE>
                     </buildArgs>
