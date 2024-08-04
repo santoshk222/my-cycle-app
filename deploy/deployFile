@@ -11,12 +11,13 @@ pipeline {
     }
     post {
         always{
+        stages {
            stage('Deploy'){
               steps{
                   bat 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
               }
            }
-        }
+        }}
 
         always {
             bat 'docker image ls'
