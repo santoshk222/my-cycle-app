@@ -10,7 +10,7 @@ pipeline {
 
         stage('Deploy'){
             steps{
-                bat docker run -d -p 8090:8090 myapps/mycycleapp:latest
+                bat 'docker run -d -p 8090:8090 myapps/mycycleapp:latest'
             }
         }
     }
