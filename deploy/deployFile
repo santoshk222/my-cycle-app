@@ -7,20 +7,26 @@ pipeline {
                 script {
                     def containerExists = powershell(script: 'docker ps -a -q -f name=mycycleapp', returnStdout: true).trim()
                     if (containerExists) {
+                        echo 'Container exists. Removing container'
                         powershell 'docker stop mycycleapp'
                         powershell 'docker rm mycycleapp'
-                    } else {
-                        echo 'No existing container named mycycleapp'
                     }
                 }
             }
         }
+
+        stage('Deploy My Cycle app') {
+            steps {
+                bat 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
+                bat 'docker image ls'
+                bat 'docker container ls'
+            }
+        }
     }
+
     post {
         always {
-            powershell 'docker run --name mycycleapp -d -p 8090:8090 myapps/mycycleapp:latest'
-            powershell 'docker image ls'
-            powershell 'docker container ls'
+            echo 'Pipeline completed'
         }
     }
 }
