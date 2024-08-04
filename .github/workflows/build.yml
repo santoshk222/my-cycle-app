@@ -39,4 +39,4 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-spring-boot-app:${{ env.VERSION }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/my-cycle-app:${{ env.VERSION }}
