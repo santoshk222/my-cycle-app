@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('Remove running container'){
                 steps{
-                    bat 'docker stop mycycleapp'
-                    bat 'docker rm mycycleapp'
+                    bat 'docker stop mycycleapp || true'
+                    bat 'docker rm mycycleapp || true'
                 }
             }
     }
